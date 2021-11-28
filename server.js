@@ -33,7 +33,7 @@ app.get('/api/:date', function (req, res) {
 		}else {
 			if(!isNaN( new Date(Number(date)).getTime())){
 				res.send({
-					"unix":date,
+					"unix": Number(date),
 					"utc": new Date(Number(date)).toUTCString()
 				})
 			}else{
