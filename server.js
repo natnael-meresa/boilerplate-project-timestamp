@@ -21,20 +21,25 @@ app.get("/", function (req, res) {
 app.get('/api/:date', function (req, res) {
 	let date =req.params.date
 	try{
-		if(new Date(req.params.date) != 'Invalid Date'){
-			if(date.indexOf('-') !== -1){
+		if(date.indexOf('-') !== -1){
+			if(!isNaN( new Date(date).getTime())){
 				res.send({
 					"unix":Math.floor(new Date(date)),
 					"utc": new Date(date).toUTCString()
-				})		
+				})
 			}else {
+				res.send({ error : "Invalid Date" })
+			}		
+		}else {
+			if(!isNaN( new Date(Number(date)).getTime())){
 				res.send({
 					"unix":date,
 					"utc": new Date(Number(date)).toUTCString()
 				})
+			}else{
+				res.send({ error : "Invalid Date" })
 			}
-		}else{
-			res.send({ error : "Invalid Date" })
+			
 		}
 	}catch(err){
 		
