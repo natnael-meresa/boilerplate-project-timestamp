@@ -21,7 +21,7 @@ app.get("/", function (req, res) {
 app.get('/api/:date', function (req, res) {
 	let date =req.params.date
 	try{
-		if(date.indexOf('-') !== -1){
+		if(!isNaN(Number(date))){
 			if(!isNaN( new Date(date).getTime())){
 				res.send({
 					"unix":Math.floor(new Date(date)),
@@ -42,7 +42,7 @@ app.get('/api/:date', function (req, res) {
 			
 		}
 	}catch(err){
-		
+		res.send({ error : "Invalid Date" })
 	}
 
 })
